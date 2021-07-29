@@ -2,118 +2,165 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IxDA Taiwan 答案之卡</title>
-
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
-    integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IxDA Taiwan 答案之卡</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <div class="container">
-    <div class="text-center">
-      <div class="display-4 page-title">IxDA Taiwan 答案之卡</div>
-      <p class="lead">尋找你要的答案</p>
-    </div>
-    <h2>Setup
+    <div class="container">
+        <div class="text-center">
+            <div class="display-4 page-title">IxDA Taiwan Card of Answer</div>
+            <p class="lead">歡迎來到 IxDA 答案之卡！請在心中默念你的問題，IxDA答案之卡可以幫助解答你的疑惑</p>
+        </div>
+        <!--<h2>Setup
       <span class="float-right">
         <i id="setup-show" onclick="setupToggleHide();" class="fas fa-chevron-down"></i>
       </span>
-    </h2>
-    <div class="game-setup">
-      <form id="setup" onsubmit="setupComplete();">
-        <div class="form-group">
-          <label for="setup-card-content">Card content</label>
-          <textarea class="form-control" id="setup-card-content" rows="5"></textarea>
-          <small class="form-text text-muted">One card per line. Supports basic HTML.</small>
+    </h2> -->
+        <div class="game-setup">
+            <form id="setup" onsubmit="setupComplete();" class="d-none">
+                <div class="form-group">
+                    <label for="setup-card-content">Card content</label>
+                    <textarea class="form-control" id="setup-card-content" rows="5">
+          </textarea>
+                    <small class="form-text text-muted">One card per line. Supports basic HTML.</small>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-lg btn-success" onclick="setupComplete();">Go!</button>
+                </div>
+            </form>
+            <hr />
         </div>
-        <div class="form-group">
-          <button type="button" class="btn btn-lg btn-success" onclick="setupComplete();">Go!</button>
+        <div id="deck" class="deck">
+            <div class="active-card">
+                <p id="card-text" class="active-card-text"></p>
+            </div>
+            <p>
+                <button class="btn btn-lg btn-success" onclick="drawCard();">Draw 抽卡</button>
+            </p>
         </div>
-      </form>
-      <hr />
     </div>
-    <div id="deck" class="deck d-none">
-      <h2>Draw a card</h2>
-      <div class="active-card">
-        <p id="card-text" class="active-card-text"></p>
-      </div>
-      <p>
-        <button class="btn btn-lg btn-success" onclick="drawCard();">Draw</button>
-      </p>
-    </div>
-
-  </div>
-
-  <script>
+    <script>
     // SETUP
     let Deck;
     let CardList = [
-      "This is a default card.",
-      "This is another default card.",
+        "放眼世界、 征服宇宙 <br> You are the king of the galaxy.",
+        "現在這樣就很好了！<br>Have a nice day.",
+        "這個很雷<br>Thor say Yes!",
+        "魔鬼藏在細節裡<br>The devil is in the details.",
+        "開心<br>｡:.ﾟヽ( * ´∀`)ﾉﾟ.:｡ ",
+        "りしれ供さ小<br>WTF",
+        "沒有什麼事是炸雞不能解決的<br>Max knows everything",
+        "先做再說<br>Just Do It",
+        "換個角度思考<br>Try a different angle",
+        "保持彈性<br>Imagine yourself as water (or cat)",
+        "休息了<br>Hibernate Mode",
+        "在有跟沒有之間<br>Yes ...and No",
+        "把腦袋天線打開<br>Open your sensor",
+        "你應該先問對問題<br>Ask the right question fisrt",
+        "嗯嗯<br>Mm-hmmm",
+        "勿忘世上苦人多<br>You ungrateful bastard!",
+        "聽聽就好<br>Go in one ear and out the other",
+        "不錯，但是...<br>Nice, but...",
+        "放下你的偶包和自我<br>You are not as important as you think you are.",
+        "深呼吸<br>Breath",
+        "可憐啊！<br>Oh, Poor you!",
+        "你確定？<br>Are you sure?",
+        "愛與包容<br>Pease & Love",
+        "不宜上班<br>Work From Home",
+        "便利貼大法好<br>Post-it! (3M only!)",
+        "拿起點點貼紙投票吧<br>Dot voting time",
+        "老闆說了算<br>Boss say so",
+        "正面對決！<br>Who Pa Who",
+        "換個方式溝通看看<br>Try speaking in layman's terms.",
+        "當個有想法的人<br>Use your brain",
+        "慢慢來，比較快<br>Slow is the new fashion",
+        "舊的不去新的不來<br>Happy New Year",
+        "去問PM<br>Ask your PM (If you have one.)",
+        "改完一次那你有想過再改第二次嗎?<br>No pain no gain",
+        "砍掉重練<br>You Shall Not Pass",
+        "你準備好了嗎？<br>Are you ready?",
+        "多元與躍進<br>Diversity and Advancement",
+        "用設計思考<br>Design Thinking",
+        "拖<br>Hide",
+        "先沖一杯咖啡再說<br>A coffee a day keeps the boss away",
+        "你可能會陷入泥濘難以脫身<br>You are stuck",
+        "放吼伊去<br>Let it go~ Let it go~",
+        "逃避雖可恥但有用<br>新垣結衣 <3",
+        "現在要出征<br>On My Way",
+        "不要浪費時間<br>Don't waste your time",
+        "過程是很重要的<br>The journey is the reward.",
+        "尋求協助吧<br>Get Help",
+        "不要再問了<br>Ask one more time and you won't see the Sun again",
+        "冷靜<br>Keep calm and carry on",
+        "你旁邊的人知道答案<br>Ask the one beside you.",
+        "來不及了<br>Too Late",
+        "休淡幾類<br>ちょっと",
+        "母湯 Mother Soup",
+        "棒棒 Bomb Bomb"
     ];
 
     function setupToggleHide() {
-      let form = document.getElementById('setup');
-      form.classList.toggle('d-none');
+        let form = document.getElementById('setup');
+        form.classList.toggle('d-none');
     }
 
     function setupComplete() {
-      let setupCardContent = document.getElementById('setup-card-content').value;
-      let setupCards = setupCardContent.split('\n');
+        let setupCardContent = document.getElementById('setup-card-content').value;
+        let setupCards = setupCardContent.split('\n');
 
-      for (let i = 0; i < setupCards.length; i++) {
-        if (setupCards[i] == "") {
-          setupCards.splice(i, 1);
-          i--;
+        for (let i = 0; i < setupCards.length; i++) {
+            if (setupCards[i] == "") {
+                setupCards.splice(i, 1);
+                i--;
+            }
         }
-      }
 
-      if (setupCards.length > 0) {
-        CardList = [];
-        CardList = setupCards.slice();
+        if (setupCards.length > 0) {
+            CardList = [];
+            CardList = setupCards.slice();
 
-        console.log("INFO: The following cards were parsed.");
-        console.log(CardList);
+            console.log("INFO: The following cards were parsed.");
+            console.log(CardList);
 
-        refillCards();
-        document.getElementById('setup').classList.add('d-none');
-        document.getElementById('deck').classList.remove('d-none');
-      }
+            refillCards();
+            document.getElementById('setup').classList.add('d-none');
+            document.getElementById('deck').classList.remove('d-none');
+        }
     }
 
     function shuffle(a) {
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
     }
 
     function refillCards() {
-      Deck = [];
-      Deck = CardList.slice();
-      Deck = shuffle(Deck);
-      console.log('INFO: Deck was refilled and shuffled.');
+        Deck = [];
+        Deck = CardList.slice();
+        Deck = shuffle(Deck);
+        console.log('INFO: Deck was refilled and shuffled.');
     }
 
     // GAME
     function drawCard() {
-      if (Deck.length < 1) {
-        refillCards();
-      }
+        if (Deck.length < 1) {
+            refillCards();
+        }
 
-      let card = Deck.pop();
-      document.getElementById('card-text').innerHTML = card;
-      console.log(card);
+        let card = Deck.pop();
+        document.getElementById('card-text').innerHTML = card;
+        console.log(card);
     }
 
     refillCards();
-  </script>
+    </script>
 </body>
 
 </html>
