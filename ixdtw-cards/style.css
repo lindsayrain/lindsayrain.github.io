@@ -33,8 +33,8 @@ h6 {
     background-color: purple;
     box-shadow: 2px 2px 2px #eee;
     border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 23px;
+    padding: 20x;
     height: 354px;
     width: 250px;
     margin: 0 auto;
@@ -46,7 +46,7 @@ h6 {
 }
 
 .deck .active-card .active-card-text {
-    padding-top: 100px;
+    padding: 115px 0px 0px 10px;
     color: white ;
     font-size: 20px;
     text-align: center
