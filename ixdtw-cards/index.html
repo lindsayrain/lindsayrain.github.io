@@ -13,8 +13,8 @@
 <body>
     <div class="container">
         <div class="text-center">
-            <div class="display-4 page-title">IxDA Taiwan Card of Answer</div>
-            <p class="lead">歡迎來到 IxDA 答案之卡！請在心中默念你的問題，IxDA答案之卡可以幫助解答你的疑惑</p>
+            <div class="display-4 page-title">IxDA Taiwan Card of Answer 答案之卡</div>
+            <p class="lead">歡迎來到 IxDA 答案之卡！<br> 請在心中默念你的問題，IxDA答案之卡可以幫助解答你的疑惑</p>
         </div>
         <!--<h2>Setup
       <span class="float-right">
@@ -36,11 +36,14 @@
             <hr />
         </div>
         <div id="deck" class="deck">
-            <div class="active-card">
+            <div id="active-card" class="active-card default-card">
                 <p id="card-text" class="active-card-text"></p>
             </div>
             <p>
                 <button class="btn btn-lg btn-success" onclick="drawCard();">Draw 抽卡</button>
+            </p>
+            <p>
+                <button class="btn btn-default" onclick="refillCards();">Re-Draw 重新抽</button>
             </p>
         </div>
     </div>
@@ -146,6 +149,9 @@
         Deck = CardList.slice();
         Deck = shuffle(Deck);
         console.log('INFO: Deck was refilled and shuffled.');
+        document.getElementById('active-card').classList.add('default-card');
+        document.getElementById('card-text').innerHTML = "";
+
     }
 
     // GAME
@@ -153,6 +159,7 @@
         if (Deck.length < 1) {
             refillCards();
         }
+        document.getElementById('active-card').classList.remove('default-card');
 
         let card = Deck.pop();
         document.getElementById('card-text').innerHTML = card;

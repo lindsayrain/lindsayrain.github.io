@@ -30,17 +30,24 @@ h6 {
 }
 
 .deck .active-card {
+    background-color: purple;
     box-shadow: 2px 2px 2px #eee;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 20px;
-    height: 300px;
+    height: 354px;
     width: 250px;
     margin: 0 auto;
     margin-bottom: 20px
 }
 
+.default-card{
+    background-image: url("answerofcard.png");
+}
+
 .deck .active-card .active-card-text {
+    padding-top: 100px;
+    color: white ;
     font-size: 20px;
     text-align: center
 }
