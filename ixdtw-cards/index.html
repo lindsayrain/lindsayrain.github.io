@@ -14,8 +14,8 @@
 <body>
     <div class="container">
         <div class="text-center">
-            <div class="display-5 page-title">IxDA Taiwan Card of Answer </div>
-            <p class="lead">歡迎來到 IxDA 答案之卡！請在心中默念你的問題，點擊 "抽卡"，答案之卡可以幫你解答</p>
+            <div class="display-5 page-title">~ 答案之卡 ~</div>
+            <p class="lead">歡迎來到 IxDA 答案之卡！請在心中默念你的問題，翻卡卡片，答案之卡可以幫你解答</p>
         </div>
         <div class="game-setup">
             <form id="setup" onsubmit="setupComplete();" class="d-none">
@@ -105,10 +105,12 @@
     }
 
     refillCards();
+    
 
-    $("#active-card").flip(100);
+    $("#active-card").flip();
     $("#active-card").click(function(){
-        drawCard();
+        var flip = $("#active-card").data("flip-model");
+        if(flip.isFlipped) drawCard();
     });
     
     </script>
