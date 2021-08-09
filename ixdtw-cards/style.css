@@ -4,6 +4,8 @@
 
 html,
 body {
+    color: white;
+    background-color: #000240;
     padding: 0;
     margin: 0
 }
@@ -30,10 +32,7 @@ h6 {
 }
 
 .deck .active-card {
-    background-color: purple;
-    box-shadow: 2px 2px 2px #eee;
-    border: 1px solid #ddd;
-    border-radius: 23px;
+    border-radius: 24px;
     padding: 20x;
     height: 354px;
     width: 250px;
@@ -45,9 +44,17 @@ h6 {
     background-image: url("answerofcard.png");
 }
 
+.flip-card{
+    background-color:#A71FE7;
+}
+
 .deck .active-card .active-card-text {
-    padding: 115px 0px 0px 10px;
+    padding: 115px 10px 0px 10px;
     color: white ;
     font-size: 20px;
     text-align: center
+}
+.btn-ixdtw{
+    color: #FFF;
+    background-color:#000ae1;
 }

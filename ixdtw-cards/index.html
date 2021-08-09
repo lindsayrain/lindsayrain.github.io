@@ -40,7 +40,7 @@
                 <p id="card-text" class="active-card-text"></p>
             </div>
             <p>
-                <button class="btn btn-lg btn-success" onclick="drawCard();">Draw 抽卡</button>
+                <button class="btn btn-lg btn-ixdtw" onclick="drawCard();">Draw 抽卡</button>
             </p>
             <p>
                 <button class="btn btn-dark" onclick="refillCards();">Re-Draw 重新抽</button>
@@ -160,6 +160,7 @@
             refillCards();
         }
         document.getElementById('active-card').classList.remove('default-card');
+        document.getElementById('active-card').classList.add('flip-card');
 
         let card = Deck.pop();
         document.getElementById('card-text').innerHTML = card;
