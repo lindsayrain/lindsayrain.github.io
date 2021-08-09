@@ -40,15 +40,21 @@ h6 {
     margin-bottom: 20px
 }
 
-.default-card{
+.front{
     background-image: url("answerofcard.png");
 }
 
-.flip-card{
+.back{
     background-color:#A71FE7;
+    border-radius: 24px;
+    padding: 20x;
+    height: 354px;
+    width: 250px;
+    margin: 0 auto;
+    margin-bottom: 20px
 }
 
-.deck .active-card .active-card-text {
+.deck .active-card .back .active-card-text {
     padding: 115px 10px 0px 10px;
     color: white ;
     font-size: 20px;
