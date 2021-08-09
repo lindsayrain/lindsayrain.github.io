@@ -36,8 +36,9 @@ h6 {
     padding: 20x;
     height: 354px;
     width: 250px;
-    margin: 0 auto;
-    margin-bottom: 20px
+    margin: 0 20px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .front{
@@ -47,18 +48,13 @@ h6 {
 .back{
     background-color:#A71FE7;
     border-radius: 24px;
-    padding: 20x;
-    height: 354px;
-    width: 250px;
-    margin: 0 auto;
-    margin-bottom: 20px
 }
 
 .deck .active-card .back .active-card-text {
     padding: 115px 10px 0px 10px;
     color: white ;
     font-size: 20px;
-    text-align: center
+    text-align: center;
 }
 .btn-ixdtw{
     color: #FFF;
@@ -66,4 +62,7 @@ h6 {
 }
 .btn-ixdtw:hover{
     color: #FFF;
+}
+.selling{
+    text-align: center;
 }

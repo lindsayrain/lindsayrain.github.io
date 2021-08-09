@@ -15,9 +15,9 @@
     <div class="container">
         <div class="text-center">
             <div class="display-5 page-title">~ 答案之卡 ~</div>
-            <p class="lead">歡迎來到 IxDA 答案之卡！請在心中默念你的問題，翻卡卡片，答案之卡可以幫你解答</p>
+            <p class="lead">歡迎來到 IxDA 答案之卡！請在心中默念你的問題，依序翻開卡片，答案之卡可以幫你解答</p>
         </div>
-        <div class="game-setup">
+        <!-- <div class="game-setup">
             <form id="setup" onsubmit="setupComplete();" class="d-none">
                 <div class="form-group">
                     <label for="setup-card-content">Card content</label>
@@ -29,13 +29,25 @@
                     <button type="button" class="btn btn-lg btn-success" onclick="setupComplete();">Go!</button>
                 </div>
             </form>
-        </div>
+        </div> -->
         <div id="deck" class="deck">
             <div id="active-card" class="active-card ">
-                <div id="front" class="front"> </div> 
+                <div id="front" class="front"> </div>
                 <div id="back "class="back">
                     <p id="card-text" class="active-card-text"></p>
-                </div>                 
+                </div>                       
+            </div>
+            <div id="active-card-2" class="active-card">
+                <div id="front" class="front"> </div> 
+                <div id="back "class="back">
+                    <p id="card-text-2" class="active-card-text"></p>
+                </div>                   
+            </div>
+            <div id="active-card-3" class="active-card">
+                <div id="front" class="front"> </div> 
+                <div id="back "class="back">
+                    <p id="card-text-3" class="active-card-text"></p>
+                </div>                   
             </div>
           <!-- <p>
                 <button class="btn btn-lg btn-ixdtw" onclick="drawCard();">Draw 抽卡</button>
@@ -44,6 +56,10 @@
                 <button class="btn btn-dark" onclick="refillCards();">Re-Draw 重新抽</button>
             </p> -->
         </div>
+        <br>
+        <br>
+            <p class="selling"><a href="https://forms.gle/MZgx3xzccLV5Ebuq9" target="_blank">實體卡片販售中</a></p>
+        
     </div>
     <script>
     // SETUP
@@ -104,13 +120,42 @@
         console.log(card);
     }
 
+    function drawCard2() {
+        if (Deck.length < 1) {
+            refillCards();
+        }
+        let card = Deck.pop();
+        document.getElementById('card-text-2').innerHTML = card;
+        console.log(card);
+    }
+
+    function drawCard3() {
+        if (Deck.length < 1) {
+            refillCards();
+        }
+        let card = Deck.pop();
+        document.getElementById('card-text-3').innerHTML = card;
+        console.log(card);
+    }
+
     refillCards();
-    
 
     $("#active-card").flip();
     $("#active-card").click(function(){
         var flip = $("#active-card").data("flip-model");
         if(flip.isFlipped) drawCard();
+    });
+
+    $("#active-card-2").flip();
+    $("#active-card-2").click(function(){
+        var flip = $("#active-card-2").data("flip-model");
+        if(flip.isFlipped) drawCard2();
+    });
+
+    $("#active-card-3").flip();
+    $("#active-card-3").click(function(){
+        var flip = $("#active-card-3").data("flip-model");
+        if(flip.isFlipped) drawCard3();
     });
     
     </script>
