@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天運動了嗎？</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        @keyframes sad-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-3deg); }
+            50% { transform: translateX(5px) rotate(3deg); }
+            75% { transform: translateX(-5px) rotate(-3deg); }
+        }
+        .animate-sad-shake {
+            animation: sad-shake 0.5s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s ease-in-out;
+        }
+        #emoji-display {
+            font-size: 6rem;
+            line-height: 1;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        #emoji-display:hover {
+             transform: scale(1.1);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-blue-100 flex flex-col items-center justify-center min-h-screen p-6">
+
+    <div id="app" class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center transition-all duration-500">
+        <div id="message-area" class="mb-8">
+             <div id="emoji-display" class="mx-auto"></div>
+            <p id="message" class="text-xl font-semibold text-gray-700"></p>
+            <p id="sub-message" class="text-sm text-gray-500 mt-2"></p>
+        </div>
+
+        <div class="space-y-4">
+            <button id="log-exercise-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors duration-300 hover-scale w-full">
+                我今天運動超過 30 分鐘了！💪
+            </button>
+
+            <button id="remind-again-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300 hover-scale w-full hidden">
+                請繼續提醒我...🥺
+            </button>
+        </div>
+
+        <p id="last-exercise-time" class="text-xs text-gray-400 mt-6"></p>
+    </div>
+
+    <script>
+        // --- DOM 元素 ---
+        const messageArea = document.getElementById('message-area');
+        const emojiDisplay = document.getElementById('emoji-display');
+        const messageElement = document.getElementById('message');
+        const subMessageElement = document.getElementById('sub-message');
+        const logExerciseBtn = document.getElementById('log-exercise-btn');
+        const remindAgainBtn = document.getElementById('remind-again-btn');
+        const lastExerciseTimeElement = document.getElementById('last-exercise-time');
+        const appElement = document.getElementById('app');
+
+        // --- 狀態和訊息 ---
+        const today = new Date().toLocaleDateString();
+        let lastExerciseDate = localStorage.getItem('lastExerciseDate');
+        let forceRemind = sessionStorage.getItem('forceRemind') === 'true';
+
+        // --- Emoji 庫 ---
+        const guiltEmojis = ['😞', '😢', '😠', '🥺', '😩', '💔', '😥', '😭', '👀'];
+        const successEmojis = ['🥳', '🎉', '🤩', '🥰', '👍', '💯', '✨', '💪', '🌟'];
+
+        // --- 訊息庫 ---
+        const guiltMessages = [
+            { msg: "你確定不再多動一下嗎？", sub: "再堅持一下下嘛..." },
+            { msg: "好吧，既然你要求...", sub: "運動不夠，贅肉會笑喔。" },
+            { msg: "盯......", sub: "我會一直看著你的。" },
+            { msg: "休息夠了嗎？是不是該起來動動了？", sub: "沙發馬鈴薯警告！🥔" },
+            { msg: "我知道你運動了，但還可以更好！", sub: "超越昨天的自己！(物理)" }
+        ];
+        const originalSuccessMessages = [
+            { msg: "太棒了！我就知道你做得到！", sub: "為你感到驕傲！明天也要繼續喔！" },
+            { msg: "今天的你閃閃發光！", sub: "汗水是最好的裝飾品！" },
+            { msg: "做得好！保持下去！", sub: "健康的生活方式正在向你招手！" }
+        ];
+
+        // --- 功能函數 ---
+        function updateDisplay(messages, emojis) {
+            const randomMsgIndex = Math.floor(Math.random() * messages.length);
+            const selectedMessage = messages[randomMsgIndex];
+            messageElement.textContent = selectedMessage.msg;
+            subMessageElement.textContent = selectedMessage.sub;
+            const randomEmojiIndex = Math.floor(Math.random() * emojis.length);
+            emojiDisplay.textContent = emojis[randomEmojiIndex];
+        }
+
+        function checkExerciseStatus() {
+            lastExerciseDate = localStorage.getItem('lastExerciseDate');
+            const isExercisedToday = lastExerciseDate === today;
+
+            if (forceRemind && isExercisedToday) {
+                // 情況 1: 今天已運動，但用戶要求繼續提醒
+                updateDisplay(guiltMessages, guiltEmojis);
+                // *** 修改開始 ***
+                // 讓主要按鈕可以再次點擊
+                logExerciseBtn.textContent = '我今天運動超過 30 分鐘了！💪'; // 恢復按鈕文字
+                logExerciseBtn.disabled = false; // 啟用按鈕
+                logExerciseBtn.classList.remove('bg-gray-400', 'cursor-not-allowed'); // 移除禁用樣式
+                logExerciseBtn.classList.add('bg-green-500', 'hover:bg-green-600'); // 加回啟用樣式
+                // *** 修改結束 ***
+                remindAgainBtn.classList.add('hidden');
+                appElement.classList.remove('from-green-100', 'to-emerald-100');
+                appElement.classList.add('from-yellow-100', 'to-orange-100');
+                messageArea.classList.add('animate-sad-shake');
+                 setTimeout(() => {
+                        messageArea.classList.remove('animate-sad-shake');
+                    }, 500);
+
+            } else if (isExercisedToday) {
+                // 情況 2: 今天已運動，正常顯示成功訊息
+                updateDisplay(originalSuccessMessages, successEmojis);
+                logExerciseBtn.textContent = '今天已完成！明天再來！';
+                logExerciseBtn.disabled = true; // 禁用按鈕
+                logExerciseBtn.classList.remove('bg-green-500', 'hover:bg-green-600'); // 移除啟用樣式
+                logExerciseBtn.classList.add('bg-gray-400', 'cursor-not-allowed'); // 加回禁用樣式
+                remindAgainBtn.classList.remove('hidden');
+                appElement.classList.remove('from-red-100', 'to-orange-100', 'from-yellow-100');
+                appElement.classList.add('from-green-100', 'to-emerald-100');
+                messageArea.classList.remove('animate-sad-shake');
+
+            } else {
+                // 情況 3: 今天尚未運動
+                updateDisplay(guiltMessages, guiltEmojis);
+                logExerciseBtn.textContent = '我今天運動超過 30 分鐘了！💪';
+                logExerciseBtn.disabled = false; // 啟用按鈕
+                logExerciseBtn.classList.add('bg-green-500', 'hover:bg-green-600'); // 確保啟用樣式
+                logExerciseBtn.classList.remove('bg-gray-400', 'cursor-not-allowed'); // 移除禁用樣式
+                remindAgainBtn.classList.add('hidden');
+                appElement.classList.remove('from-green-100', 'to-emerald-100', 'from-yellow-100');
+                appElement.classList.add('from-red-100', 'to-orange-100');
+                if (Math.random() < 0.3) {
+                    messageArea.classList.add('animate-sad-shake');
+                    setTimeout(() => {
+                        messageArea.classList.remove('animate-sad-shake');
+                    }, 500);
+                }
+            }
+
+            if (lastExerciseDate) {
+                lastExerciseTimeElement.textContent = `上次運動紀錄：${lastExerciseDate}`;
+            } else {
+                lastExerciseTimeElement.textContent = '還沒有運動紀錄喔，快開始吧！';
+            }
+        }
+
+        function handleLogExercise() {
+            const now = new Date();
+            localStorage.setItem('lastExerciseDate', now.toLocaleDateString());
+            forceRemind = false;
+            sessionStorage.removeItem('forceRemind');
+            checkExerciseStatus();
+        }
+
+        function handleRemindAgain() {
+            forceRemind = true;
+            sessionStorage.setItem('forceRemind', 'true');
+            checkExerciseStatus();
+        }
+
+        // --- 事件監聽 ---
+        logExerciseBtn.addEventListener('click', handleLogExercise);
+        remindAgainBtn.addEventListener('click', handleRemindAgain);
+
+        // --- 初始化 ---
+        checkExerciseStatus();
+
+    </script>
+
+</body>
+</html>
